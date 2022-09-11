@@ -15,6 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+
 	<string>greeny</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
@@ -30,6 +31,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.619306165402-kkqb53mr3k9n4n079ur20f06t9bkancn</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao422477c03efca08d62fe591d46710a79</string>
 			</array>
 		</dict>
 	</array>
