@@ -49,6 +49,8 @@ dependencies:
   uuid: ^3.0.6
   flutter_naver_login: ^1.6.0
   cloud_firestore: ^3.4.6
+  image_picker: ^0.8.5+3
+  google_maps_flutter: ^2.2.0
 
 
 dev_dependencies:

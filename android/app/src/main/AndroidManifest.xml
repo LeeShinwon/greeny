@@ -1,10 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.greeny">
+
+    <!-- 위치 정보 엑세스 권한 요청 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:ignore="WrongManifestParent" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
+        tools:ignore="WrongManifestParent" />
+
+
    <application
         android:label="그린이"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCcS_TOHArCdcuHggzHR4w3U2Y55p8IlxU"/>
 
 
        <meta-data
@@ -56,5 +68,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-    </application>
+
+   </application>
 </manifest>
