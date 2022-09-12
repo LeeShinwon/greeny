@@ -40,7 +40,8 @@ const List<List<String>> town = [
   ['강릉시','고성군','동해시','삼척시','속초시','양구군','양양군','영원군','원주시','인제군','정선군','철원군','춘천시','태백시','평창군','홍천군','화천군','횡성군'],
   //제주
   ['서귀포시','제주시'],
-  //세종은 없음...
+  //세종
+  ['세종시'],
 
 ];
 
@@ -53,6 +54,7 @@ class MyGreenyView extends StatefulWidget {
 
 class _MyGreenyViewState extends State<MyGreenyView> {
   int _onTapCity =0;
+  int _onTapTown =0;
 
   @override
   Widget build(BuildContext context) {
@@ -148,14 +150,34 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                         ),
                       ),
                       VerticalDivider(thickness: 1),
-                      SizedBox(
+                      Container(
                           width: getScreenWidth(context) > 400 ? 120 : 100,
-                          child: Center(child: Text('시/구/군',style: TextStyle(
-                            fontSize: getScreenWidth(context) > 400 ? 15 : 10,
-                          ),))
+                          height: (getScreenHeight(context)- kToolbarHeight - 17)*0.7-45,
+                          child: ListView.separated(
+                            itemBuilder: (BuildContext context,int index){
+                              return GestureDetector(
+                                child: Text(town[_onTapCity][index],style: TextStyle(
+                                  fontSize: getScreenWidth(context) > 400 ? 15 : 10,
+                                  fontWeight: _onTapTown == index ? FontWeight.w800:FontWeight.w500,
+                                  color: _onTapTown == index ?Color(0xff319E31):Colors.black,
+                                ),),
+                                onTap: (){
+                                  setState(() {
+                                    _onTapTown = index;
+                                  });
+                                },
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return Divider();
+                            },
+                            itemCount: town[_onTapCity].length,
+                          ),
                       ),
                       VerticalDivider(thickness: 1),
-                      SizedBox(width:getScreenWidth(context) > 400 ? getScreenWidth(context)-230 : getScreenWidth(context)-200,
+                      Container(
+                          width:getScreenWidth(context) > 400 ? getScreenWidth(context)-230 : getScreenWidth(context)-200,
+                          height: (getScreenHeight(context)- kToolbarHeight - 17)*0.7-45,
                           child: Center(child: Text('냉장고',style: TextStyle(
                             fontSize: getScreenWidth(context) > 400 ? 15 : 10,
                           ),))
