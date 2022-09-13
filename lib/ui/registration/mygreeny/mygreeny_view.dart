@@ -1,3 +1,5 @@
+import 'dart:collection';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,6 +58,34 @@ class _MyGreenyViewState extends State<MyGreenyView> {
   int _onTapCity =0;
   int _onTapTown =0;
 
+  List<HashMap<String,String>> myGreeny = <HashMap<String,String>>[];
+
+  int getMyGreenyNum(String location){//doc.get('name')
+    HashMap<String,String> myOne = getMyOne(location);
+    int num=0;
+
+    for(HashMap<String,String> h in myGreeny){
+
+      if(myOne['city']==h['city']&&myOne['location']==h['location']&&myOne['town']==h['town']){
+        return num;
+      }
+      num++;
+    }
+
+    return -1;
+  }
+
+  HashMap<String,String> getMyOne(String location){
+    HashMap<String,String> myOne = new HashMap<String, String>();
+    myOne.putIfAbsent('city', () => city[_onTapCity]);
+    myOne.putIfAbsent('town', () => town[_onTapCity][_onTapTown]);
+    myOne.putIfAbsent('location', () => location);
+
+    return myOne;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +106,7 @@ class _MyGreenyViewState extends State<MyGreenyView> {
             padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
             child: Text('관심있는 냉장고를 선택해주세요.',
               style: TextStyle(
-                fontSize: 12,
+                fontSize: getScreenWidth(context) > 400 ? 15: 12,
               ),),
           ),
           Container(
@@ -178,18 +208,62 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                       Container(
                           width:getScreenWidth(context) > 400 ? getScreenWidth(context)-230 : getScreenWidth(context)-200,
                           height: (getScreenHeight(context)- kToolbarHeight - 17)*0.7-45,
-                          child: Center(child: Text('냉장고',style: TextStyle(
-                            fontSize: getScreenWidth(context) > 400 ? 15 : 10,
-                          ),))
+                          child: StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('map').doc(city[_onTapCity]).collection('town').doc(town[_onTapCity][_onTapTown]).collection('location').snapshots(),
+                            //.firestore.collection('town').where("town", isEqualTo: _onTapTown).firestore.collection('location').
+                              builder: (context, snapshot) {
+                              if(snapshot.data!.docs.length == 0){
+                                return Center(child: Text('등록된 냉장고 없음'));
+                              }
+                              else{
+                                return ListView.separated(
+                                  itemBuilder: (BuildContext context,int index){
+                                    var doc = snapshot.data!.docs[index];
+                                    //print(doc.get('name'));
+                                    return GestureDetector(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(doc.get('name'),style: TextStyle(
+                                            fontSize: getScreenWidth(context) > 400 ? 15 : 10,
+                                            fontWeight: (getMyGreenyNum(doc.get('name'))!=-1) ? FontWeight.w800:FontWeight.w500,
+                                            color: (getMyGreenyNum(doc.get('name'))!=-1) ?Color(0xff319E31):Colors.black,
+                                          ),),
+                                          (getMyGreenyNum(doc.get('name'))!=-1)? Icon(
+                                            CupertinoIcons.check_mark,
+                                            size: getScreenWidth(context) > 400 ? 15 : 10,
+                                          ):Text(''),
+                                        ],
+                                      ),
+                                      onTap: (){
+                                        int index = getMyGreenyNum(doc.get('name'));
+                                        if(index!=-1){//존재함
+                                          myGreeny.removeAt(index);
+                                        }else{
+                                          HashMap<String,String> myOne = getMyOne(doc.get('name'));
+                                          myGreeny.add(myOne);
+                                        }
+                                        print(myGreeny);
+                                        setState(() {
+                                          //_onTapTown = index;
+                                        });
+                                      },
+                                    );
+
+                                  },
+                                  separatorBuilder: (BuildContext context, int index) {
+                                    return Divider();
+                                  },
+                                  itemCount: snapshot.data!.docs.length ,
+                                );
+                              }
+
+                            }
+                          ),
                       ),
                     ],
                   ),
                 ),
-
-
-
-
-
 
               ],
             ),
