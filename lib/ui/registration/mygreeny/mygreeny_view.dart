@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:greeny/ui/registration/profile/profile_view.dart';
 import 'package:greeny/util/screen_size.dart';
+import 'package:greeny/ui/main/bottomnavigationbar.dart';
 
 const List<String> city= ["서울", "경기", "인천", "부산", "대구","광주", "대전", "울산","경남","경북", "충남", "충북","전남","전북", "강원", "제주","세종"];
 const List<List<String>> town = [
@@ -359,6 +360,7 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                                   'location':h['location'],
                                 });
                           }
+                          Get.to(bottomNavigationBar());
                         }
                         else{
                           Fluttertoast.showToast(
@@ -390,3 +392,4 @@ class _MyGreenyViewState extends State<MyGreenyView> {
     );
   }
 }
+
