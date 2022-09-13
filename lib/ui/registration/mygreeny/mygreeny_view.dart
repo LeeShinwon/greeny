@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:greeny/ui/registration/profile/profile_view.dart';
@@ -55,6 +57,9 @@ class MyGreenyView extends StatefulWidget {
 }
 
 class _MyGreenyViewState extends State<MyGreenyView> {
+
+  final user = FirebaseAuth.instance.currentUser;
+
   int _onTapCity =0;
   int _onTapTown =0;
 
@@ -103,7 +108,7 @@ class _MyGreenyViewState extends State<MyGreenyView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
+            padding: const EdgeInsets.fromLTRB(10, 5, 0, 10),
             child: Text('관심있는 냉장고를 선택해주세요.',
               style: TextStyle(
                 fontSize: getScreenWidth(context) > 400 ? 15: 12,
@@ -224,11 +229,16 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(doc.get('name'),style: TextStyle(
-                                            fontSize: getScreenWidth(context) > 400 ? 15 : 10,
-                                            fontWeight: (getMyGreenyNum(doc.get('name'))!=-1) ? FontWeight.w800:FontWeight.w500,
-                                            color: (getMyGreenyNum(doc.get('name'))!=-1) ?Color(0xff319E31):Colors.black,
-                                          ),),
+                                          Flexible(
+                                            child: RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              text: TextSpan(text: doc.get('name'),style: TextStyle(
+                                                fontSize: getScreenWidth(context) > 400 ? 15 : 10,
+                                                fontWeight: (getMyGreenyNum(doc.get('name'))!=-1) ? FontWeight.w800:FontWeight.w500,
+                                                color: (getMyGreenyNum(doc.get('name'))!=-1) ?Color(0xff319E31):Colors.black,
+                                              ),),
+                                            ),
+                                          ),
                                           (getMyGreenyNum(doc.get('name'))!=-1)? Icon(
                                             CupertinoIcons.check_mark,
                                             size: getScreenWidth(context) > 400 ? 15 : 10,
@@ -269,6 +279,112 @@ class _MyGreenyViewState extends State<MyGreenyView> {
             ),
 
           ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        width: getScreenWidth(context)>400?40:35,
+                        height: getScreenWidth(context)>400?40:35,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Color(0xff319E31),),
+                          //color: Colors.amber.shade200,
+                              borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: IconButton(//선택 초기화
+                            onPressed: (){
+                              setState(() {
+                                myGreeny.removeRange(0, myGreeny.length);
+                              });
+                            },
+                            icon: Icon(CupertinoIcons.arrow_clockwise, size: getScreenWidth(context)>400?20:15,),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: getScreenWidth(context)-60,
+                      height: getScreenWidth(context)>400?40:35,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                          itemBuilder:(BuildContext context,int index){
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Container(
+                                  child: Center(child: Padding(
+                                    padding: const EdgeInsets.only(left:10),
+                                    child: Row(
+                                      children: [
+                                        Text(myGreeny[index]['location']!,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                            fontSize: getScreenWidth(context) > 400 ? 15 : 10,
+                                        ),),
+                                        IconButton(onPressed: (){
+                                          setState(() {
+                                            myGreeny.remove(myGreeny[index]);
+                                          });
+
+                                        }, icon: Icon(CupertinoIcons.clear_circled_solid,size: getScreenWidth(context) > 400 ? 20 : 15,color: Colors.white,))
+                                      ],
+                                    ),
+                                  )),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    color: Color(0xff319E31),
+                                  )
+                              ),
+                            );
+                          },
+                        itemCount: myGreeny.length ,
+                      ),
+                    )
+                  ],
+                ),
+                Center(
+                  child: SizedBox(
+                    width: getScreenWidth(context)*0.8,
+                    height: getScreenWidth(context)> 400 ? 50 : 40,
+                    child: ElevatedButton(
+                      onPressed: (){
+                        if(myGreeny.length >0){
+                          for(HashMap<String,String> h in myGreeny){
+                            FirebaseFirestore.instance.collection('user').doc(user!.uid).collection('mygreeny').add(
+                                {
+                                  'city':h['city'],
+                                  'town':h['town'],
+                                  'location':h['location'],
+                                });
+                          }
+                        }
+                        else{
+                          Fluttertoast.showToast(
+                              msg: '관심 냉장고를 선택해주세요.',
+                            gravity: ToastGravity.CENTER,
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        }
+
+                      },
+                      child: Text('완료하기', style: TextStyle(fontSize: getScreenWidth(context) > 400 ? 17:14,
+                        fontWeight: FontWeight.w600,),),
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff319E31),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
     );

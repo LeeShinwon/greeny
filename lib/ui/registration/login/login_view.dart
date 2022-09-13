@@ -9,6 +9,7 @@ import 'package:greeny/auth.dart';
 import 'package:greeny/ui/registration/login/google_login.dart';
 
 import '../../../data/repository/login.dart';
+import '../profile/profile_view.dart';
 import 'kakao_login.dart';
 import 'kakao_view_model.dart';
 
@@ -74,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                 child: ElevatedButton(
                     onPressed: () async {
                       await kakaoViewModel.login();
-                      Get.to(Authenticaton());
+                      Get.to(ProfileView());
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -115,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
                     onPressed: () async {
                       await googleViewModel.login();
 
-                      Get.to(Authenticaton());
+                      Get.to(ProfileView());
 
                     },
                     style: ElevatedButton.styleFrom(
