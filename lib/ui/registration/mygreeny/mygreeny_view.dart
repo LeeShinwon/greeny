@@ -218,6 +218,14 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                             stream: FirebaseFirestore.instance.collection('map').doc(city[_onTapCity]).collection('town').doc(town[_onTapCity][_onTapTown]).collection('location').snapshots(),
                             //.firestore.collection('town').where("town", isEqualTo: _onTapTown).firestore.collection('location').
                               builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color> (Color(0xff319E31)),
+                                    ), //로딩되는 동그라미 보여주기
+                                  );
+                                }
+
                               if(snapshot.data!.docs.length == 0){
                                 return Center(child: Text('등록된 냉장고 없음'));
                               }

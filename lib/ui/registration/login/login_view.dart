@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:greeny/auth.dart';
+import 'package:greeny/ui/main/bottomnavigationbar.dart';
 import 'package:greeny/ui/registration/login/google_login.dart';
 
 import '../../../data/repository/login.dart';
@@ -75,7 +76,15 @@ class _LoginViewState extends State<LoginView> {
                 child: ElevatedButton(
                     onPressed: () async {
                       await kakaoViewModel.login();
-                      Get.to(ProfileView());
+
+                      final user = FirebaseAuth.instance.currentUser;
+
+                      if(FirebaseFirestore.instance.collection('user').doc(user!.uid) != null){
+                        Get.to(bottomNavigationBar());
+                      }
+                      else{
+                        Get.to(ProfileView());
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -116,7 +125,14 @@ class _LoginViewState extends State<LoginView> {
                     onPressed: () async {
                       await googleViewModel.login();
 
-                      Get.to(ProfileView());
+                      final user = FirebaseAuth.instance.currentUser;
+
+                      if(FirebaseFirestore.instance.collection('user').doc(user!.uid) != null){
+                        Get.to(bottomNavigationBar());
+                      }
+                      else{
+                        Get.to(ProfileView());
+                      }
 
                     },
                     style: ElevatedButton.styleFrom(

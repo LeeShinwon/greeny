@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greeny/ui/main/community/community_page.dart';
 import 'package:greeny/ui/main/location/location_page.dart';
 import 'package:greeny/ui/main/mypage/my_page.dart';
 
-import 'home/home_page.dart';
+import 'home/home_first_page/home_page.dart';
 
 class bottomNavigationBar extends StatefulWidget {
   const bottomNavigationBar({Key? key}) : super(key: key);
@@ -32,6 +33,8 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
 
   ];
 
+
+
   //메뉴별 다른 body 지정을 위해 List<Widget> 선언
   static const List<Widget> _bodyOptions = <Widget>[
     HomePage(),
@@ -47,14 +50,20 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
     });
 
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         //toolbarHeight: getAppBarHeight(context),
         backgroundColor: Colors.white,
+        centerTitle: false,
         elevation: 0,
-        title: _appBarOptions.elementAt(_selectedIndex),
+        title:  _appBarOptions.elementAt(_selectedIndex),
+        actions: [
+          _selectedIndex==0?IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search, color: Colors.black,)):Text(''),
+          IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.bell,color: Colors.black,)),
+        ],
 
       ),
       body: Center(
@@ -95,6 +104,11 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
         selectedFontSize: 10,
         unselectedFontSize: 10,
       ),
+      floatingActionButton: _selectedIndex==0?FloatingActionButton(
+        onPressed: (){},
+        child: Icon(CupertinoIcons.plus,),
+        backgroundColor: Color(0xff319E31),
+      ):Text(''),
     );
   }
 }
