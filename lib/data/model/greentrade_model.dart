@@ -13,7 +13,6 @@ class GreenTrade{
   GreenTrade(this.writerId, this.title, this.content, this.isGreen, this.registrationTime, this.manufacturingDate, this.expiryDate, this.location, this.id);
 
 
-
 }
 
 class Comment{

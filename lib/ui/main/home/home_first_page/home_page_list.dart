@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:greeny/data/model/user_model.dart';
+import 'package:greeny/ui/main/home/home_detail_page/home_detail_page.dart';
 import 'package:greeny/ui/main/home/home_first_page/home_page_card.dart';
 
 import '../../../../data/model/greentrade_model.dart';
@@ -60,7 +63,7 @@ class _HomePageListState extends State<HomePageList> {
           for (int i = 0; i < doc!.length; i++) {
             MyGreeny m = new MyGreeny(
                 doc[i].get('location').toString().split('/')[2],
-                doc[i].get('location').toString().split('/')[7],
+                doc[i].get('location').toString().split('/')[6],
                 doc[i].get('location').toString().split('/')[4]);
 
             Timestamp t = doc[i].get('registrationTime');
@@ -93,14 +96,19 @@ class _HomePageListState extends State<HomePageList> {
             }
           }
 
-          return ListView.separated(
+          return ListView.builder(
               itemCount: lgt.length,
               itemBuilder: (BuildContext context,int index) {
-                return HomePageCard(lgt[index],mg[index] );
+                return GestureDetector(
+                    child: HomePageCard(lgt[index],mg[index] ),
+                  onTap: (){
+                      Get.to(HomeDetailPage(lgt[index],mg[index] ));
+                  },
+                );
               },
-              separatorBuilder: (BuildContext context, int index) {
+              /*separatorBuilder: (BuildContext context, int index) {
                 return Divider();
-              }
+              }*/
           );
         }
     );

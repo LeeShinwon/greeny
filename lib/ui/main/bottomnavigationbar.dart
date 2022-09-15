@@ -1,9 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:greeny/data/model/user_model.dart';
 import 'package:greeny/ui/main/community/community_page.dart';
+import 'package:greeny/ui/main/home/home_add_content/home_add_content.dart';
 import 'package:greeny/ui/main/location/location_page.dart';
 import 'package:greeny/ui/main/mypage/my_page.dart';
+import 'package:greeny/util/screen_size.dart';
 
 import 'home/home_first_page/home_page.dart';
 
@@ -21,7 +26,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
   //특정 텍스트 스타일을 상수로 지정
   static const TextStyle optionStyle = TextStyle(
       color: Colors.black,
-      //fontSize: 25,
+      height: 1,
       fontWeight: FontWeight.bold,);
 
   //메뉴별 다른 AppBar의 텍스트 지정을 위해 List<Text> 선언
@@ -105,7 +110,9 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
         unselectedFontSize: 10,
       ),
       floatingActionButton: _selectedIndex==0?FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Get.to(HomeAddContent());
+        },
         child: Icon(CupertinoIcons.plus,),
         backgroundColor: Color(0xff319E31),
       ):Text(''),

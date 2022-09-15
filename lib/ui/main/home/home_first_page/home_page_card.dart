@@ -19,6 +19,7 @@ class _HomePageCardState extends State<HomePageCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 1),
       width: getScreenWidth(context),
       height: 120,
       color: Colors.white,
