@@ -24,3 +24,9 @@
 ![(scene)_그린이_소프트웨어 기획-19](https://user-images.githubusercontent.com/82192923/190915846-cbe917e8-ca4a-481d-8c9f-8cbdb28914d3.jpg)
 hubusercontent.com/82192923/190915841-2d3d1a40-1863-4d40-9ac5-8ff6ab9cd3e2.jpg)
 ![(scene)_그린이_소프트웨어 기획-20](https://user-images.githubusercontent.com/82192923/190915853-0c4ec891-7f3a-423c-8aee-e2c0e5d407e0.jpg)
+
+
+[(scene)_그린이_소프트웨어 기획.pdf](https://github.com/LeeShinwon/greeny/files/9594334/scene._._.pdf)
+
+
+[(scene)_그린이_실행동영상.mp4.zip](https://github.com/LeeShinwon/greeny/files/9594336/scene._._.mp4.zip)
