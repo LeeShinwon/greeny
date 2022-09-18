@@ -142,36 +142,6 @@ class _LicenseState extends State<License> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('kakao_flutter_sdk_user', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
-                Text('Copyright [yyyy] [name of copyright owner]\nApache License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
-              ],
-            ),
-            subtitle: TextButton(
-              onPressed: (){
-                Get.to(WebViewApp('https://pub.dev/packages/kakao_flutter_sdk_user/license'));
-              }, child: Text('https://pub.dev/packages/kakao_flutter_sdk_user/license', style: TextStyle(color: Color(0xff319E31)),
-            ),
-            ),
-          ),
-          ListTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('kakao_flutter_sdk', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
-                Text('Copyright [yyyy] [name of copyright owner]\nApache License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
-              ],
-            ),
-            subtitle: TextButton(
-              onPressed: (){
-                Get.to(WebViewApp('https://pub.dev/packages/kakao_flutter_sdk/license'));
-              }, child: Text('https://pub.dev/packages/kakao_flutter_sdk/license', style: TextStyle(color: Color(0xff319E31)),
-            ),
-            ),
-          ),
-          ListTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
                 Text('webview_flutter', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
                 Text('Copyright 2013 The Flutter Authors.\nBSD-3-Clause  License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
               ],
@@ -217,6 +187,36 @@ class _LicenseState extends State<License> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('kakao_flutter_sdk_user', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright [yyyy] [name of copyright owner]\nApache License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/kakao_flutter_sdk_user/license'));
+              }, child: Text('https://pub.dev/packages/kakao_flutter_sdk_user/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('kakao_flutter_sdk', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright [yyyy] [name of copyright owner]\nApache License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/kakao_flutter_sdk/license'));
+              }, child: Text('https://pub.dev/packages/kakao_flutter_sdk/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text('uuid', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
                 Text('Copyright (c) 2021 Yulian Kuncheff\nMIT License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
               ],
@@ -228,22 +228,148 @@ class _LicenseState extends State<License> {
             ),
             ),
           ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('cloud_firestore', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright 2017, the Chromium project authors. \nBSD-3-Clause  License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/cloud_firestore/license'));
+              }, child: Text('https://pub.dev/packages/cloud_firestore/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('google_maps_flutter', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright 2013 The Flutter Authors. \nBSD-3-Clause  License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/google_maps_flutter/license'));
+              }, child: Text('https://pub.dev/packages/google_maps_flutter/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('fluttertoast', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright (c) 2020 Karthik Ponnam\nMIT License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/fluttertoast/license'));
+              }, child: Text('https://pub.dev/packages/fluttertoast/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('image_picker', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright 2013 The Flutter Authors. \nApache-2.0, BSD-3-Clause  License', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/image_picker/license'));
+              }, child: Text('https://pub.dev/packages/image_picker/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('firebase_storage', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright 2017 The Chromium Authors.\nBSD-3-Clause License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/firebase_storage/license'));
+              }, child: Text('https://pub.dev/packages/firebase_storage/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('flutterfire_ui', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright 2017, the Chromium project authors.\nBSD-3-Clause License ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/flutterfire_ui/license'));
+              }, child: Text('https://pub.dev/packages/flutterfire_ui/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('carousel_slider', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright (c) 2017 serenader\nMIT License', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/carousel_slider/license'));
+              }, child: Text('https://pub.dev/packages/carousel_slider/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('location', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright (c) 2017, Guillaume Bernos.\nMIT License', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/location/license'));
+              }, child: Text('https://pub.dev/packages/location/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('geolocator ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15)),
+                Text('Copyright (c) 2018 Baseflow\nMIT License', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 10)),
+              ],
+            ),
+            subtitle: TextButton(
+              onPressed: (){
+                Get.to(WebViewApp('https://pub.dev/packages/geolocator/license'));
+              }, child: Text('https://pub.dev/packages/geolocator/license', style: TextStyle(color: Color(0xff319E31)),
+            ),
+            ),
+          ),
 
           /*
           *
 
-  : ^0.4.1
-  : ^0.13.5
-  uuid: ^3.0.6
-  flutter_naver_login: ^1.6.0
-  cloud_firestore: ^3.4.6
-  google_maps_flutter: ^2.2.0
-  fluttertoast: ^8.0.9
-  image_picker: ^0.8.5+3
-  firebase_storage: ^10.3.8
-  flutterfire_ui: ^0.4.3+8
-  english_words: ^4.0.0
-  carousel_slider: ^4.1.1
+  : ^2.2.0
+
+
   location: ^4.4.0
   geolocator: ^9.0.1
   */

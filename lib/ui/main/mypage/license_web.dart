@@ -15,7 +15,13 @@ class _WebViewAppState extends State<WebViewApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter WebView'),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        //centerTitle: false,
+        elevation: 0,
+        title:  Text('라이센스 링크', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),),
       ),
       body: WebView(
         initialUrl: widget.uri,
