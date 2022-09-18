@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   MyGreeny _myChoice = new MyGreeny('city', 'location', 'town');
+  List<MyGreeny> _myGrenyList =[];
 
   bool isSame(QueryDocumentSnapshot doc){
     if(_myChoice.city == doc!.get('city') && _myChoice.location == doc!.get('location') &&_myChoice.town == doc!.get('town')){
@@ -48,6 +49,12 @@ class _HomePageState extends State<HomePage> {
                         ), //로딩되는 동그라미 보여주기
                       );
                     }
+                    if(snapshot.hasData){
+                      for(int i=0; i<snapshot.data!.docs.length; i++){
+                        var doc = snapshot.data?.docs[i];
+                        _myGrenyList.add(new MyGreeny(doc!.get('city'), doc!.get('location'), doc!.get('town')));
+                      }
+                    }
 
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -66,7 +73,6 @@ class _HomePageState extends State<HomePage> {
                                 side: BorderSide(width: 2,color: Color(0xff319E31)),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
                                 backgroundColor: (isSame(doc!))?Color(0xff319E31):Colors.white,
-
                             ),
                           ),
                         );
@@ -93,6 +99,7 @@ class _HomePageState extends State<HomePage> {
 
           ),
         ),
+
         Expanded(
             child: HomePageList(_myChoice)
         ),

@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,7 +16,8 @@ import '../../../data/model/city_model.dart';
 
 
 class MyGreenyView extends StatefulWidget {
-  const MyGreenyView({Key? key}) : super(key: key);
+  MyGreenyView(this.image, {Key? key}) : super(key: key);
+  File? image;
 
   @override
   State<MyGreenyView> createState() => _MyGreenyViewState();
@@ -322,7 +325,17 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                     width: getScreenWidth(context)*0.8,
                     height: getScreenWidth(context)> 400 ? 50 : 40,
                     child: ElevatedButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        FirebaseStorage storage = FirebaseStorage.instance;
+                        Reference storageRef = storage.ref('profile/user/');
+
+                        storageRef = storage.ref('profile/user/' + widget.image!.path);
+                        await storageRef.putFile(File(widget.image!.path));
+
+                        FirebaseFirestore.instance.collection('user').doc(user!.uid).update(
+                            {
+                              'photoURL':'profile/user/' + widget.image!.path,
+                            });
                         if(myGreeny.length >0){
                           for(HashMap<String,String> h in myGreeny){
                             FirebaseFirestore.instance.collection('user').doc(user!.uid).collection('mygreeny').add(

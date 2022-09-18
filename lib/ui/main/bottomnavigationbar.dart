@@ -33,7 +33,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
   static final List<Widget> _appBarOptions = <Widget>[
     Text('홈', style: optionStyle),
     Text('위치', style: optionStyle),
-    Text('게시판', style: optionStyle),
+    //Text('게시판', style: optionStyle),
     Text('나', style: optionStyle),
 
   ];
@@ -41,10 +41,10 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
 
 
   //메뉴별 다른 body 지정을 위해 List<Widget> 선언
-  static const List<Widget> _bodyOptions = <Widget>[
+  static List<Widget> _bodyOptions = <Widget>[
     HomePage(),
     LocationPage(),
-    CommunityPage(),
+    //CommunityPage(),
     MyPage(),
   ];
 
@@ -61,6 +61,11 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
     return Scaffold(
       appBar: AppBar(
         //toolbarHeight: getAppBarHeight(context),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        leading: _selectedIndex==0? Icon(CupertinoIcons.house_fill):
+        _selectedIndex==1? Icon(CupertinoIcons.placemark_fill): Icon(CupertinoIcons.person_fill),
         backgroundColor: Colors.white,
         centerTitle: false,
         elevation: 0,
@@ -86,11 +91,11 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
             label: '위치',
             activeIcon: Icon(CupertinoIcons.placemark_fill),
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.text_bubble),
             label: '게시판',
             activeIcon: Icon(CupertinoIcons.text_bubble_fill),
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
             activeIcon: Icon(CupertinoIcons.person_fill),

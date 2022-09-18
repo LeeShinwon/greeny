@@ -229,6 +229,9 @@ class _HomeAddContentState extends State<HomeAddContent> {
                                 title: Text('카메라'),
                                 onTap: (){
                                   getImage(ImageSource.camera);
+                                  setState(() {
+                                  });
+                                  Get.back();
                                 },
                               ),
                               Divider(),
@@ -237,6 +240,7 @@ class _HomeAddContentState extends State<HomeAddContent> {
                                 title: Text('갤러리'),
                                 onTap: (){
                                   selectImages();
+                                  Get.back();
                                 },
                               ),
                               Divider(),

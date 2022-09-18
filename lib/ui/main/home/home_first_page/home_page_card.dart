@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greeny/data/model/greentrade_model.dart';
 import 'package:greeny/util/screen_size.dart';
+import 'package:greeny/util/storage.dart';
 
 import '../../../../data/model/user_model.dart';
 
@@ -18,17 +19,45 @@ class HomePageCard extends StatefulWidget {
 class _HomePageCardState extends State<HomePageCard> {
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 1),
       width: getScreenWidth(context),
       height: 120,
-      color: Colors.white,
+      color: widget.gt.isGreen?Color(0xffECECEC) :Colors.white ,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/images/profile.png', width: 100,height: 100,fit: BoxFit.fitHeight,),
+            FutureBuilder(
+              future: storage.downloadURL(widget.gt.picture[0]),
+              builder: (BuildContext context, AsyncSnapshot<String> snap) {
+                if (snap.connectionState == ConnectionState.done && snap.hasData) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    child: Expanded(
+                      child: Image.network(
+                        snap.data!,
+                        width: 100,height: 100,fit: BoxFit.fill,
+                      ),
+                    ),
+                  );
+                }
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xff319E31)),
+                    ), //로딩되는 동그라미 보여주기
+                  );
+                }
+                return Image.asset('assets/images/profile.png', width: 100,height: 100,fit: BoxFit.fitHeight,);
+              },
+            ),
+            //Image.asset('assets/images/profile.png', width: 100,height: 100,fit: BoxFit.fitHeight,),
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Column(
@@ -50,21 +79,9 @@ class _HomePageCardState extends State<HomePageCard> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(CupertinoIcons.heart, size: 15,),
-                        StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection('greenTrade/'+widget.gt.id +'/like').snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color> (Color(0xff319E31)),
-                                ), //로딩되는 동그라미 보여주기
-                              );
-                            }
-                            return Text(snapshot.data!.docs.length.toString(), style: TextStyle(
-                              fontSize: 13,
-                            ),);
-                          }
-                        ),
+                      Text(widget.gt.like.length.toString(), style: TextStyle(
+                        fontSize: 13,
+                      ),),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Icon(CupertinoIcons.chat_bubble, size: 15,),

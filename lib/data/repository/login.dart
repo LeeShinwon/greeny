@@ -28,7 +28,8 @@ class LoginRepository{
           'email': user.kakaoAccount?.email.toString(),
           'name': user!.kakaoAccount!.profile!.nickname.toString(),
           'uid': 'kakao'+user.id.toString(),
-          'photoURL': user!.kakaoAccount!.profile!.profileImageUrl,
+          //'photoURL': user!.kakaoAccount!.profile!.profileImageUrl,
+          'photoURL':'',
         });
       }
     }
@@ -52,7 +53,8 @@ class LoginRepository{
           'email': user.email.toString(),
           'name': user.displayName.toString(),
           'uid': user.uid,
-          'photoURL': user.photoURL,
+          //'photoURL': user.photoURL,
+          'photoURL': '',
         });
       }
     }

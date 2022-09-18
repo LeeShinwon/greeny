@@ -4,12 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:greeny/auth.dart';
 import 'package:greeny/ui/main/bottomnavigationbar.dart';
 import 'package:greeny/ui/registration/login/google_login.dart';
 
-import '../../../data/repository/login.dart';
 import '../profile/profile_view.dart';
 import 'kakao_login.dart';
 import 'kakao_view_model.dart';
@@ -76,15 +73,18 @@ class _LoginViewState extends State<LoginView> {
                 child: ElevatedButton(
                     onPressed: () async {
                       await kakaoViewModel.login();
-
                       final user = FirebaseAuth.instance.currentUser;
-
-                      if(FirebaseFirestore.instance.collection('user').doc(user!.uid) != null){
-                        Get.to(bottomNavigationBar());
-                      }
-                      else{
-                        Get.to(ProfileView());
-                      }
+                      Get.to(StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('user/'+user!.uid + '/mygreeny').snapshots(),
+                          builder: (context, snapshot) {
+                            if(snapshot.data!.docs.length == 0){
+                              return ProfileView();
+                            }
+                            else {
+                              return bottomNavigationBar();
+                            }
+                          }),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -126,14 +126,24 @@ class _LoginViewState extends State<LoginView> {
                       await googleViewModel.login();
 
                       final user = FirebaseAuth.instance.currentUser;
-
-                      if(FirebaseFirestore.instance.collection('user').doc(user!.uid) != null){
-                        Get.to(bottomNavigationBar());
-                      }
-                      else{
-                        Get.to(ProfileView());
-                      }
-
+                      Get.to(StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('user/'+user!.uid + '/mygreeny').snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color> (Color(0xff319E31)),
+                                ), //로딩되는 동그라미 보여주기
+                              );
+                            }
+                            if(snapshot.data!.docs.length == 0){
+                              return ProfileView();
+                            }
+                            else {
+                              return bottomNavigationBar();
+                            }
+                          }),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,

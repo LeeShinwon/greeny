@@ -46,7 +46,7 @@ class _HomePageListState extends State<HomePageList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: true).snapshots(),
+        stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: false).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -66,34 +66,38 @@ class _HomePageListState extends State<HomePageList> {
                 doc[i].get('location').toString().split('/')[6],
                 doc[i].get('location').toString().split('/')[4]);
 
-            Timestamp t = doc[i].get('registrationTime');
-            print(doc[i].get('registrationTime'));
-            String time = DateTime.fromMicrosecondsSinceEpoch(
-                t.microsecondsSinceEpoch).toString().split(" ")[0];
-            print(time);
-            time = time.replaceAll("-", ".");
+              Timestamp t = doc[i].get('registrationTime');
+              print(doc[i].get('registrationTime'));
+              String time = DateTime.fromMicrosecondsSinceEpoch(
+                  t.microsecondsSinceEpoch).toString().split(" ")[0];
+              print(time);
+              time = time.replaceAll("-", ".");
 
-            GreenTrade gt = new GreenTrade(
-                doc[i].get('writerId'),
-                doc[i].get('title'),
-                doc[i].get('content'),
-                doc[i].get('isGreen'),
-                time,
-                doc[i].get('manufacturingDate'),
-                doc[i].get('expiryDate'),
-                doc[i].get('location'),
-              doc[i].id
-            );
-            if (m.town == widget.myChoice.town &&
-                m.location == widget.myChoice.location &&
-                m.city == widget.myChoice.city) {
-              lgt.add(gt);
-              mg.add(m);
-            }
-            else if (isAll()) {
-              lgt.add(gt);
-              mg.add(m);
-            }
+              GreenTrade gt = new GreenTrade(
+                  doc[i].get('writerId'),
+                  doc[i].get('title'),
+                  doc[i].get('content'),
+                  doc[i].get('isGreen'),
+                  time,
+                  doc[i].get('manufacturingDate'),
+                  doc[i].get('expiryDate'),
+                  doc[i].get('location'),
+                  doc[i].get('picture'),
+                  doc[i].get('like'),
+                  doc[i].get('report'),
+                  doc[i].id
+              );
+              if (m.town == widget.myChoice.town &&
+                  m.location == widget.myChoice.location &&
+                  m.city == widget.myChoice.city) {
+                lgt.add(gt);
+                mg.add(m);
+              }
+              else if (isAll()) {
+                lgt.add(gt);
+                mg.add(m);
+              }
+
           }
 
           return ListView.builder(
