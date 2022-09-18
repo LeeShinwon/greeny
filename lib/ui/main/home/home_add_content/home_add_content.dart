@@ -158,11 +158,11 @@ class _HomeAddContentState extends State<HomeAddContent> {
               try {
                 for (int i = 0; i < imageFileList!.length; i++) {
                   storageRef = storage.ref('profile/greenTrade/' +
-                      imageFileList![i].path.split('/')[6]);
+                      imageFileList![i].path);
                   await storageRef.putFile(File(imageFileList![i].path));
                   //downloadURL = await storageRef.getDownloadURL();
                   urlList.add('profile/greenTrade/' +
-                      imageFileList![i].path.split('/')[6]);
+                      imageFileList![i].path);
                 }
               }
               on FirebaseAuthException catch (e) {

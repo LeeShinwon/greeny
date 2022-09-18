@@ -46,7 +46,7 @@ class _HomePageListState extends State<HomePageList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: true).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(

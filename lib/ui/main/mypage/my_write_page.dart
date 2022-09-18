@@ -46,7 +46,7 @@ class _MyWritePageState extends State<MyWritePage> {
 
       ),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: false).snapshots(),
+          stream: FirebaseFirestore.instance.collection('greenTrade').orderBy('registrationTime', descending: true).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

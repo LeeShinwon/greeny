@@ -10,12 +10,15 @@ import 'package:greeny/ui/registration/login/login_view.dart';
 
 import '../../../util/screen_size.dart';
 import 'license.dart';
+import 'package:greeny/util/storage.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+    
     final user = FirebaseAuth.instance.currentUser;
     return SingleChildScrollView(
       child: Container(
@@ -25,7 +28,57 @@ class MyPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Row(
                 children: [
-                  Image.asset('assets/images/profile.png', width: 120,),
+                  Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: const Color(0xff319E31),
+                        ),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(10.0) // POINT
+                        ),
+                      ),
+                      child: Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child:StreamBuilder(
+                                stream: FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots(),
+                                builder: (context, snapshot) {
+                                  if(snapshot.data!.get('photoURL')==''){
+                                    return Image.asset('assets/images/profile.png', width: 120,height: 120,fit: BoxFit.fitHeight,);
+                                  }
+                                  return FutureBuilder(
+                                    future: storage.downloadURL(snapshot.data!.get('photoURL')),
+                                    builder: (BuildContext context, AsyncSnapshot<String> snap) {
+                                      if (snap.connectionState == ConnectionState.done && snap.hasData) {
+                                        return ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
+                                          ),
+                                          child: Expanded(
+                                            child: Image.network(
+                                              snap.data!,
+                                              width: 100,height: 100,fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      if (snap.connectionState == ConnectionState.waiting) {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff319E31)),
+                                          ), //로딩되는 동그라미 보여주기
+                                        );
+                                      }
+                                      return Image.asset('assets/images/profile.png', width: 120,height: 120,fit: BoxFit.fitHeight,);
+                                    },
+                                  );
+                                }
+                            ),
+
+                          ) )),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
@@ -37,7 +90,8 @@ class MyPage extends StatelessWidget {
                         Text(user!.email.toString(), style: TextStyle(
                           fontWeight: FontWeight.w500, fontSize: 15,height: 2
                         ),),
-                        TextButton(onPressed: () {  },child: Row(children: [
+                        TextButton(onPressed: () {  },child: Row(
+                          children: [
                           Icon(CupertinoIcons.pencil, color: Color(0xff319E31),),
                           Text('수정', style: TextStyle(
                             color: Color(0xff319E31),

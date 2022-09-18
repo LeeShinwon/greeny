@@ -326,17 +326,20 @@ class _MyGreenyViewState extends State<MyGreenyView> {
                     height: getScreenWidth(context)> 400 ? 50 : 40,
                     child: ElevatedButton(
                       onPressed: () async {
-                        FirebaseStorage storage = FirebaseStorage.instance;
-                        Reference storageRef = storage.ref('profile/user/');
-
-                        storageRef = storage.ref('profile/user/' + widget.image!.path);
-                        await storageRef.putFile(File(widget.image!.path));
-
-                        FirebaseFirestore.instance.collection('user').doc(user!.uid).update(
-                            {
-                              'photoURL':'profile/user/' + widget.image!.path,
-                            });
                         if(myGreeny.length >0){
+                          if(widget.image != null){
+                            FirebaseStorage storage = FirebaseStorage.instance;
+                            Reference storageRef = storage.ref('profile/user/');
+
+                            storageRef = storage.ref('profile/user/' + widget.image!.path);
+                            await storageRef.putFile(File(widget.image!.path));
+
+                            FirebaseFirestore.instance.collection('user').doc(user!.uid).update(
+                                {
+                                  'photoURL':'profile/user/' + widget.image!.path,
+                                });
+                          }
+
                           for(HashMap<String,String> h in myGreeny){
                             FirebaseFirestore.instance.collection('user').doc(user!.uid).collection('mygreeny').add(
                                 {
